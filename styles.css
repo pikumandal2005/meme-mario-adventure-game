@@ -328,10 +328,18 @@ kbd {
 /* Creator Credit */
 .creator-credit {
     margin-top: 2rem;
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    backdrop-filter: blur(5px);
+    padding: 1.2rem;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.15) 100%);
+    border-radius: 15px;
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+}
+
+.creator-name {
+    margin: 0.3rem 0;
+    font-size: 1.15rem;
+    font-weight: 600;
 }
 
 .creator-credit p {
@@ -341,12 +349,15 @@ kbd {
 
 .creator-credit strong {
     color: #FFD700;
-    font-weight: 700;
+    font-weight: 800;
+    font-size: 1.2rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .credit-subtext {
-    font-size: 0.9rem;
-    opacity: 0.8;
+    font-size: 0.95rem;
+    opacity: 0.9;
+    font-weight: 500;
 }
 
 /* Mobile Touch Controls */
@@ -355,16 +366,18 @@ kbd {
     bottom: 20px;
     left: 0;
     right: 0;
-    display: none;
+    display: flex;
     justify-content: space-between;
     padding: 0 20px;
     z-index: 1000;
     pointer-events: none;
 }
 
-/* Force show on mobile screens */
-.mobile-controls.show-on-small {
-    display: flex;
+/* Desktop: hide controls */
+@media (min-width: 1024px) and (hover: hover) {
+    .mobile-controls {
+        display: none;
+    }
 }
 
 /* Show mobile controls on touch devices and small screens */

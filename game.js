@@ -433,6 +433,9 @@ function createLevel() {
         platforms.push({ x: 2100, y: 240, width: 100, height: 20, color: '#228B22' });
         platforms.push({ x: 2500, y: 200, width: 150, height: 20, color: '#228B22' });
         
+        // Final platform near flag
+        platforms.push({ x: 2700, y: 250, width: 200, height: 20, color: '#228B22' });
+        
         // Coins
         for (let i = 0; i < 20; i++) {
             coins_objects.push({ x: 200 + i * 130, y: 250 - (i % 4) * 30, collected: false });
@@ -445,7 +448,8 @@ function createLevel() {
         enemies.push({ x: 2000, y: 530, width: 30, height: 30, vx: 3.5 * config.enemySpeedMultiplier, direction: 1, patrolStart: 1900, patrolEnd: 2200 });
         enemies.push({ x: 2600, y: 530, width: 30, height: 30, vx: 4 * config.enemySpeedMultiplier, direction: 1, patrolStart: 2500, patrolEnd: 2800 });
         
-        flags.push({ x: 2550, y: 120, width: 30, height: 60 });
+        // Flag on accessible platform
+        flags.push({ x: 2750, y: 170, width: 30, height: 60 });
         
     } else if (currentLevel === 3) {
         // LEVEL 3 - The Climb (3600px, very challenging)
@@ -647,6 +651,12 @@ function startGame(level = 1) {
     document.getElementById('gameover-screen').style.display = 'none';
     document.getElementById('game-screen').style.display = 'block';
     canvas.style.display = 'block';
+    
+    // Ensure mobile controls are visible
+    const mobileControls = document.getElementById('mobile-controls');
+    if (mobileControls && window.innerWidth <= 768) {
+        mobileControls.style.display = 'flex';
+    }
     
     clearInterval(gameTimer);
     gameTimer = setInterval(() => {
