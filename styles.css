@@ -296,6 +296,102 @@ kbd {
     padding: 0 1rem;
 }
 
+/* Creator Credit */
+.creator-credit {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+}
+
+.creator-credit p {
+    margin: 0.3rem 0;
+    font-size: 1rem;
+}
+
+.creator-credit strong {
+    color: #FFD700;
+    font-weight: 700;
+}
+
+.credit-subtext {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Mobile Touch Controls */
+.mobile-controls {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: none;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.mobile-left-controls,
+.mobile-right-controls {
+    display: flex;
+    gap: 15px;
+    pointer-events: all;
+}
+
+.control-btn {
+    width: 70px;
+    height: 70px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.control-btn:active {
+    transform: scale(0.9);
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.jump-btn {
+    width: 90px;
+    height: 90px;
+    font-size: 1rem;
+    background: rgba(255, 107, 107, 0.8);
+}
+
+/* Show mobile controls on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .mobile-controls {
+        display: flex;
+    }
+}
+
+/* Mobile optimization for game buttons */
+.btn-primary, .btn-secondary {
+    min-width: 180px;
+    margin: 0.5rem;
+}
+
+/* Level Selection Screen */
+.levels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    margin: 2.5rem auto;
+    max-width: 800px;
+    padding: 0 1rem;
+}
+
 .level-card {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
@@ -372,17 +468,22 @@ kbd {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    body {
+        overflow-x: hidden;
+    }
+    
     .game-logo h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
     
     .tagline {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
     
     .btn-primary, .btn-secondary {
-        padding: 0.9rem 2rem;
-        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.95rem;
+        min-width: 150px;
     }
     
     .game-info {
@@ -396,11 +497,85 @@ kbd {
     }
     
     #gameCanvas {
-        height: 400px;
+        width: 100vw !important;
+        height: 60vh !important;
+        border-radius: 0;
+        border: none;
     }
     
     #hud {
-        flex-direction: column;
-        gap: 10px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+    
+    .hud-item {
+        flex: 1 1 auto;
+        min-width: 80px;
+        font-size: 0.9rem;
+    }
+    
+    .control-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 1.2rem;
+    }
+    
+    .jump-btn {
+        width: 75px;
+        height: 75px;
+    }
+    
+    .info-card {
+        padding: 1rem;
+    }
+    
+    kbd {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.85rem;
+    }
+    
+    .high-score-display {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .creator-credit {
+        font-size: 0.9rem;
+    }
+    
+    .stats {
+        margin: 20px 0;
+    }
+    
+    .final-score {
+        font-size: 1.5rem;
+    }
+    
+    #gameover-screen h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-logo h1 {
+        font-size: 1.6rem;
+    }
+    
+    .levels-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+    
+    .level-card {
+        padding: 1rem;
+    }
+    
+    .btn-primary, .btn-secondary {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+        min-width: 130px;
     }
 }

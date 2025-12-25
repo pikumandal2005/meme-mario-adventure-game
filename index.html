@@ -60,6 +60,11 @@
                 <span class="score-label">High Score:</span>
                 <span class="score-value" id="high-score">0</span>
             </div>
+            
+            <div class="creator-credit">
+                <p>🎮 Created by <strong>Piku Mandal</strong></p>
+                <p class="credit-subtext">@pikumandal2005</p>
+            </div>
         </div>
         
         <div id="level-select-screen" class="screen" style="display: none;">
@@ -112,6 +117,17 @@
                 <div class="hud-item">Coins: <span id="mayhem">0/13 🪙</span></div>
                 <div class="hud-item">Time: <span id="timer">120</span>s</div>
             </div>
+            
+            <!-- Mobile Touch Controls -->
+            <div id="mobile-controls" class="mobile-controls">
+                <div class="mobile-left-controls">
+                    <button id="btn-left" class="control-btn">◀</button>
+                    <button id="btn-right" class="control-btn">▶</button>
+                </div>
+                <div class="mobile-right-controls">
+                    <button id="btn-jump" class="control-btn jump-btn">JUMP</button>
+                </div>
+            </div>
         </div>
         <div id="gameover-screen" class="screen" style="display: none;">
             <h1>� Game Over!</h1>
@@ -120,8 +136,10 @@
                 <p class="mayhem-level"><span id="final-mayhem">Coins: 0/13</span></p>
                 <p id="achievement" class="achievement"></p>
             </div>
-            <button id="restart-btn" class="btn-primary">Play Again</button>
-            <button id="menu-btn" class="btn-secondary">Main Menu</button>
+            <button id="next-level-btn" class="btn-primary" style="display: none;">🎯 Next Level</button>
+            <button id="restart-btn" class="btn-primary">🔄 Play Again</button>
+            <button id="level-select-btn" class="btn-secondary">📋 Level Select</button>
+            <button id="menu-btn" class="btn-secondary">🏠 Main Menu</button>
         </div>
     </div>
     <div id="toast" class="toast"></div>

@@ -119,8 +119,20 @@ function playSound(audio) {
 document.addEventListener('DOMContentLoaded', () => {
     canvas = document.getElementById('gameCanvas');
     ctx = canvas.getContext('2d');
-    canvas.width = config.width;
-    canvas.height = config.height;
+    
+    // Responsive canvas setup
+    function resizeCanvas() {
+        if (window.innerWidth <= 768) {
+            canvas.width = Math.min(window.innerWidth, 800);
+            canvas.height = Math.min(window.innerHeight * 0.6, 600);
+        } else {
+            canvas.width = config.width;
+            canvas.height = config.height;
+        }
+    }
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
     
     // Load Arnab image
     arnabImage.src = 'arnab.jpg';
@@ -166,10 +178,25 @@ document.addEventListener('DOMContentLoaded', () => {
         startGame(currentLevel);
     });
     
+    document.getElementById('next-level-btn').addEventListener('click', () => {
+        playSound(jumpSound);
+        if (currentLevel < totalLevels) {
+            startGame(currentLevel + 1);
+        }
+    });
+    
+    document.getElementById('level-select-btn').addEventListener('click', () => {
+        playSound(coinSound);
+        showLevelSelect();
+    });
+    
     document.getElementById('menu-btn').addEventListener('click', () => {
         playSound(coinSound);
         showMenu();
     });
+    
+    // Mobile touch controls
+    setupMobileControls();
     
     // Keyboard controls
     document.addEventListener('keydown', handleKeyDown);
@@ -201,6 +228,52 @@ function handleKeyUp(e) {
     if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = false;
     if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = false;
     if (e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'Space') keys.up = false;
+}
+
+function setupMobileControls() {
+    const btnLeft = document.getElementById('btn-left');
+    const btnRight = document.getElementById('btn-right');
+    const btnJump = document.getElementById('btn-jump');
+    
+    if (!btnLeft || !btnRight || !btnJump) return;
+    
+    // Left button
+    btnLeft.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keys.left = true;
+    });
+    btnLeft.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keys.left = false;
+    });
+    
+    // Right button
+    btnRight.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keys.right = true;
+    });
+    btnRight.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keys.right = false;
+    });
+    
+    // Jump button
+    btnJump.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keys.up = true;
+    });
+    btnJump.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keys.up = false;
+    });
+    
+    // Also support mouse for testing
+    btnLeft.addEventListener('mousedown', () => keys.left = true);
+    btnLeft.addEventListener('mouseup', () => keys.left = false);
+    btnRight.addEventListener('mousedown', () => keys.right = true);
+    btnRight.addEventListener('mouseup', () => keys.right = false);
+    btnJump.addEventListener('mousedown', () => keys.up = true);
+    btnJump.addEventListener('mouseup', () => keys.up = false);
 }
 
 function createClouds() {
@@ -826,6 +899,14 @@ function endGame(won) {
     document.getElementById('gameover-screen').style.display = 'block';
     document.getElementById('final-score').textContent = score;
     document.getElementById('final-mayhem').textContent = `Level ${currentLevel} | Coins: ${coins}/${coins_objects.length}`;
+    
+    // Show/hide next level button
+    const nextLevelBtn = document.getElementById('next-level-btn');
+    if (won && currentLevel < totalLevels) {
+        nextLevelBtn.style.display = 'inline-block';
+    } else {
+        nextLevelBtn.style.display = 'none';
+    }
     
     if (won) {
         if (currentLevel === totalLevels) {
