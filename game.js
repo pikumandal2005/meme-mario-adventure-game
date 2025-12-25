@@ -4,6 +4,7 @@ const GameState = {
     MENU: 'menu',
     LEVEL_SELECT: 'level_select',
     PLAYING: 'playing',
+    PAUSED: 'paused',
     GAMEOVER: 'gameover',
     WIN: 'win'
 };
@@ -27,6 +28,7 @@ let timeLeft = 180;
 let gameTimer;
 let highScore = localStorage.getItem('arnabHighScore') || 0;
 let audioInitialized = false;
+let isPaused = false;
 
 // Level unlock system
 let unlockedLevels = JSON.parse(localStorage.getItem('unlockedLevels')) || [1];
@@ -195,6 +197,19 @@ document.addEventListener('DOMContentLoaded', () => {
         showMenu();
     });
     
+    // Pause and Exit buttons
+    document.getElementById('pause-btn').addEventListener('click', () => {
+        togglePause();
+    });
+    
+    document.getElementById('exit-btn').addEventListener('click', () => {
+        if (confirm('Exit to main menu? Your progress will be lost.')) {
+            playSound(gameOverSound);
+            clearInterval(gameTimer);
+            showMenu();
+        }
+    });
+    
     // Mobile touch controls
     setupMobileControls();
     
@@ -210,6 +225,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function handleKeyDown(e) {
+    // Pause with Escape or P key
+    if (e.code === 'Escape' || e.code === 'KeyP') {
+        if (gameState === GameState.PLAYING) {
+            togglePause();
+            e.preventDefault();
+        }
+        return;
+    }
+    
     if (e.code === 'ArrowLeft' || e.code === 'KeyA') {
         keys.left = true;
         e.preventDefault();
@@ -228,6 +252,35 @@ function handleKeyUp(e) {
     if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = false;
     if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = false;
     if (e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'Space') keys.up = false;
+}
+
+function togglePause() {
+    isPaused = !isPaused;
+    const pauseBtn = document.getElementById('pause-btn');
+    
+    if (isPaused) {
+        gameState = GameState.PAUSED;
+        clearInterval(gameTimer);
+        pauseBtn.textContent = '▶️';
+        pauseBtn.title = 'Resume';
+        showToast('⏸️ Game Paused - Press P or ⏸️ to Resume');
+    } else {
+        gameState = GameState.PLAYING;
+        pauseBtn.textContent = '⏸️';
+        pauseBtn.title = 'Pause';
+        
+        // Resume timer
+        gameTimer = setInterval(() => {
+            timeLeft--;
+            document.getElementById('timer').textContent = timeLeft;
+            if (timeLeft <= 0) {
+                endGame(false);
+            }
+        }, 1000);
+        
+        requestAnimationFrame(gameLoop);
+        showToast('▶️ Game Resumed!');
+    }
 }
 
 function setupMobileControls() {
@@ -567,6 +620,7 @@ function showLevelSelect() {
 function startGame(level = 1) {
     currentLevel = level;
     gameState = GameState.PLAYING;
+    isPaused = false;
     score = 0;
     coins = 0;
     lives = 3;
@@ -578,6 +632,13 @@ function startGame(level = 1) {
     player.velocityY = 0;
     player.jumping = false;
     player.onGround = false;
+    
+    // Reset pause button
+    const pauseBtn = document.getElementById('pause-btn');
+    if (pauseBtn) {
+        pauseBtn.textContent = '⏸️';
+        pauseBtn.title = 'Pause';
+    }
     
     createLevel();
     
@@ -609,7 +670,7 @@ function getLevelName(level) {
 let cameraX = 0; // Camera position for scrolling
 
 function gameLoop() {
-    if (gameState !== GameState.PLAYING) return;
+    if (gameState !== GameState.PLAYING || isPaused) return;
     
     // Camera follows player (with boundaries)
     const targetCameraX = player.x - canvas.width / 3;

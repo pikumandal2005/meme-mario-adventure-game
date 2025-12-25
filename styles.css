@@ -228,11 +228,40 @@ kbd {
     margin-bottom: 10px;
     font-size: 1.2rem;
     font-weight: bold;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .hud-item {
     display: flex;
     align-items: center;
+}
+
+.hud-controls {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.hud-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+    color: white;
+    font-size: 1.2rem;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.hud-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.hud-btn:active {
+    transform: scale(0.95);
 }
 
 .stats {
@@ -333,6 +362,18 @@ kbd {
     pointer-events: none;
 }
 
+/* Force show on mobile screens */
+.mobile-controls.show-on-small {
+    display: flex;
+}
+
+/* Show mobile controls on touch devices and small screens */
+@media (hover: none) and (pointer: coarse), (max-width: 768px) {
+    .mobile-controls {
+        display: flex !important;
+    }
+}
+
 .mobile-left-controls,
 .mobile-right-controls {
     display: flex;
@@ -345,35 +386,32 @@ kbd {
     height: 70px;
     border: none;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.5);
     color: white;
     font-size: 1.5rem;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     transition: all 0.2s ease;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
 .control-btn:active {
     transform: scale(0.9);
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .jump-btn {
     width: 90px;
     height: 90px;
     font-size: 1rem;
-    background: rgba(255, 107, 107, 0.8);
-}
-
-/* Show mobile controls on touch devices */
-@media (hover: none) and (pointer: coarse) {
-    .mobile-controls {
-        display: flex;
-    }
+    background: rgba(255, 107, 107, 0.85);
+    border-color: rgba(255, 107, 107, 1);
 }
 
 /* Mobile optimization for game buttons */

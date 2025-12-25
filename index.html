@@ -116,16 +116,20 @@
                 <div class="hud-item">Score: <span id="score">0</span></div>
                 <div class="hud-item">Coins: <span id="mayhem">0/13 🪙</span></div>
                 <div class="hud-item">Time: <span id="timer">120</span>s</div>
+                <div class="hud-controls">
+                    <button id="pause-btn" class="hud-btn" title="Pause">⏸️</button>
+                    <button id="exit-btn" class="hud-btn" title="Exit to Menu">❌</button>
+                </div>
             </div>
             
             <!-- Mobile Touch Controls -->
-            <div id="mobile-controls" class="mobile-controls">
+            <div id="mobile-controls" class="mobile-controls show-on-small">
                 <div class="mobile-left-controls">
-                    <button id="btn-left" class="control-btn">◀</button>
-                    <button id="btn-right" class="control-btn">▶</button>
+                    <button id="btn-left" class="control-btn" ontouchstart="" onmousedown="">◀</button>
+                    <button id="btn-right" class="control-btn" ontouchstart="" onmousedown="">▶</button>
                 </div>
                 <div class="mobile-right-controls">
-                    <button id="btn-jump" class="control-btn jump-btn">JUMP</button>
+                    <button id="btn-jump" class="control-btn jump-btn" ontouchstart="" onmousedown="">JUMP</button>
                 </div>
             </div>
         </div>
