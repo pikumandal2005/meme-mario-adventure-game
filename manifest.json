@@ -1,0 +1,32 @@
+{
+  "name": "Modi Ji Meme Master",
+  "short_name": "ModiMemes",
+  "description": "Hilarious Indian political meme game with Modi Ji! Create viral memes and collect famous quotes!",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FF9933",
+  "theme_color": "#FF9933",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇮🇳</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇮🇳</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["games", "entertainment"],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect fill='%23FF9933' width='800' height='600'/><text x='400' y='300' font-size='48' fill='white' text-anchor='middle'>🇮🇳 Modi Ji Meme Master!</text></svg>",
+      "sizes": "800x600",
+      "type": "image/svg+xml"
+    }
+  ]
+}

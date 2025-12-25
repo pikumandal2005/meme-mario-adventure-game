@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Modi Ji Meme Master - Create viral memes with Modi Ji! Hilarious Indian political comedy game!">
+    <meta name="theme-color" content="#FF9933">
+    <title>Modi Ji Meme Master 🇮🇳</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇮🇳</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="menu-screen" class="screen">
+            <div class="game-logo">
+                <h1>🎮 Arnab's Adventure</h1>
+                <p class="tagline">The Nation Wants To Know!</p>
+            </div>
+            
+            <div class="menu-buttons">
+                <button id="start-btn" class="btn-primary">
+                    <span class="btn-icon">🎯</span>
+                    <span class="btn-text">Select Level</span>
+                </button>
+                <button id="install-btn" class="btn-secondary" style="display: none;">
+                    <span class="btn-icon">📥</span>
+                    <span class="btn-text">Install Game</span>
+                </button>
+            </div>
+            
+            <div class="game-info">
+                <div class="info-card controls-card">
+                    <h3>🎮 Controls</h3>
+                    <div class="controls-grid">
+                        <div class="control-item">
+                            <kbd>←</kbd><kbd>→</kbd> or <kbd>A</kbd><kbd>D</kbd>
+                            <span>Move</span>
+                        </div>
+                        <div class="control-item">
+                            <kbd>↑</kbd> or <kbd>W</kbd> or <kbd>Space</kbd>
+                            <span>Jump</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-card features-card">
+                    <h3>🏆 Features</h3>
+                    <ul class="features-list">
+                        <li>🎯 5 Challenging Levels</li>
+                        <li>🪙 Collect Indian Flag Coins</li>
+                        <li>❤️ 3 Lives System</li>
+                        <li>🎵 Sound Effects</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="high-score-display">
+                <span class="score-label">High Score:</span>
+                <span class="score-value" id="high-score">0</span>
+            </div>
+        </div>
+        
+        <div id="level-select-screen" class="screen" style="display: none;">
+            <h1>🎮 Select Level</h1>
+            <p class="tagline">Choose Your Challenge</p>
+            
+            <div class="levels-grid">
+                <div class="level-card" data-level="1">
+                    <div class="level-number">1</div>
+                    <h3>Tutorial</h3>
+                    <p>Easy & Short</p>
+                    <div class="level-stars">⭐</div>
+                </div>
+                <div class="level-card locked" data-level="2">
+                    <div class="level-number">2</div>
+                    <h3>Rising Up</h3>
+                    <p>Medium Length</p>
+                    <div class="level-stars">⭐⭐</div>
+                    <div class="lock-icon">🔒</div>
+                </div>
+                <div class="level-card locked" data-level="3">
+                    <div class="level-number">3</div>
+                    <h3>The Climb</h3>
+                    <p>Long & Tricky</p>
+                    <div class="level-stars">⭐⭐⭐</div>
+                    <div class="lock-icon">🔒</div>
+                </div>
+                <div class="level-card locked" data-level="4">
+                    <div class="level-number">4</div>
+                    <h3>Extreme</h3>
+                    <p>Very Long</p>
+                    <div class="level-stars">⭐⭐⭐⭐</div>
+                    <div class="lock-icon">🔒</div>
+                </div>
+                <div class="level-card locked" data-level="5">
+                    <div class="level-number">5</div>
+                    <h3>Master</h3>
+                    <p>Insane Length</p>
+                    <div class="level-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="lock-icon">🔒</div>
+                </div>
+            </div>
+            
+            <button id="back-to-menu-btn" class="btn-secondary">← Back to Menu</button>
+        </div>
+        
+        <div id="game-screen" class="screen" style="display: none;">
+            <div id="hud">
+                <div class="hud-item">Score: <span id="score">0</span></div>
+                <div class="hud-item">Coins: <span id="mayhem">0/13 🪙</span></div>
+                <div class="hud-item">Time: <span id="timer">120</span>s</div>
+            </div>
+        </div>
+        <div id="gameover-screen" class="screen" style="display: none;">
+            <h1>� Game Over!</h1>
+            <div class="stats">
+                <p class="final-score">Final Score: <span id="final-score">0</span></p>
+                <p class="mayhem-level"><span id="final-mayhem">Coins: 0/13</span></p>
+                <p id="achievement" class="achievement"></p>
+            </div>
+            <button id="restart-btn" class="btn-primary">Play Again</button>
+            <button id="menu-btn" class="btn-secondary">Main Menu</button>
+        </div>
+    </div>
+    <div id="toast" class="toast"></div>
+    
+    <script src="game.js"></script>
+    <script>
+        // PWA Installation
+        let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'block';
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    showToast('Game installed! 🎮');
+                }
+                deferredPrompt = null;
+                installBtn.style.display = 'none';
+            }
+        });
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(() => console.log('Service Worker registered'))
+                .catch(err => console.log('Service Worker registration failed:', err));
+        }
+    </script>
+</body>
+</html>
