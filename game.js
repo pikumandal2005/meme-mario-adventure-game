@@ -457,8 +457,8 @@ function createLevel() {
         enemies.push({ x: 2000, y: 530, width: 30, height: 30, vx: 3.5 * config.enemySpeedMultiplier, direction: 1, patrolStart: 1900, patrolEnd: 2200 });
         enemies.push({ x: 2600, y: 530, width: 30, height: 30, vx: 4 * config.enemySpeedMultiplier, direction: 1, patrolStart: 2500, patrolEnd: 2800 });
         
-        // Flag on accessible platform
-        flags.push({ x: 2750, y: 170, width: 30, height: 60 });
+        // Flag on accessible platform (visible and reachable)
+        flags.push({ x: 2750, y: 190, width: 30, height: 60 });
         
     } else if (currentLevel === 3) {
         // LEVEL 3 - The Climb (3600px, very challenging)
