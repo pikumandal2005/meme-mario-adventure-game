@@ -386,8 +386,15 @@ function createLevel() {
     enemies = [];
     flags = [];
     
-    // Ground platform (always present)
-    platforms.push({ x: 0, y: 550, width: 2400, height: 50, color: '#8B4513' });
+    // Set level width based on current level
+    let levelGroundWidth = 2400; // Default for Level 1
+    if (currentLevel === 2) levelGroundWidth = 3000;
+    else if (currentLevel === 3) levelGroundWidth = 3600;
+    else if (currentLevel === 4) levelGroundWidth = 4200;
+    else if (currentLevel === 5) levelGroundWidth = 5000;
+    
+    // Ground platform (width varies by level)
+    platforms.push({ x: 0, y: 550, width: levelGroundWidth, height: 50, color: '#8B4513' });
     
     if (currentLevel === 1) {
         // LEVEL 1 - Tutorial (Extended to 2400px width)
@@ -424,7 +431,6 @@ function createLevel() {
         
     } else if (currentLevel === 2) {
         // LEVEL 2 - Rising Challenge (3000px width, harder)
-        platforms.push({ x: 0, y: 550, width: 3000, height: 50, color: '#8B4513' });
         
         // Complex platforming sections
         for (let i = 0; i < 25; i++) {
@@ -462,7 +468,6 @@ function createLevel() {
         
     } else if (currentLevel === 3) {
         // LEVEL 3 - The Climb (3600px, very challenging)
-        platforms.push({ x: 0, y: 550, width: 3600, height: 50, color: '#8B4513' });
         
         // Zigzag pattern - requires precise jumping
         for (let i = 0; i < 30; i++) {
@@ -504,7 +509,6 @@ function createLevel() {
         
     } else if (currentLevel === 4) {
         // LEVEL 4 - Extreme (4200px, extreme difficulty)
-        platforms.push({ x: 0, y: 550, width: 4200, height: 50, color: '#8B4513' });
         
         // Very tight platforming
         for (let i = 0; i < 40; i++) {
@@ -556,7 +560,6 @@ function createLevel() {
     } else if (currentLevel === 5) {
         // LEVEL 5 - Master (5000px, insane length and difficulty)
         platforms.push({ x: 0, y: 550, width: 5000, height: 50, color: '#8B4513' });
-        
         // Epic journey with varied challenges
         // Section 1: Wave pattern
         for (let i = 0; i < 15; i++) {
