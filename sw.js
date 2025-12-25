@@ -1,4 +1,4 @@
-const CACHE_NAME = 'arnab-platformer-v6';
+const CACHE_NAME = 'arnab-platformer-v7';
 const urlsToCache = [
   './',
   './index.html',

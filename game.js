@@ -124,12 +124,21 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Responsive canvas setup
     function resizeCanvas() {
+        const container = document.getElementById('game-container');
+        const containerWidth = container.offsetWidth;
+        
         if (window.innerWidth <= 768) {
-            canvas.width = Math.min(window.innerWidth, 800);
-            canvas.height = Math.min(window.innerHeight * 0.6, 600);
+            // Mobile: maintain aspect ratio
+            canvas.width = 800;
+            canvas.height = 600;
+            canvas.style.width = '100%';
+            canvas.style.height = 'auto';
         } else {
+            // Desktop: fixed size
             canvas.width = config.width;
             canvas.height = config.height;
+            canvas.style.width = '800px';
+            canvas.style.height = '600px';
         }
     }
     
